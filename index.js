@@ -1,0 +1,152 @@
+/**
+ * Intercepts clicks on a given element
+ *
+ */
+var Interceptor = module.exports = function interceptClicks(el, opts, cb) {
+	// Options and element are optional
+	if (typeof el === 'function') {
+		cb = el;
+		opts = {};
+		el = window;
+	} else if (typeof opts === 'function') {
+		cb = opts;
+		opts = {};
+		// Duck-typing here because you can bind events to the window just fine
+		// also, it might be good to bind to synthetic objects 
+		// to be able to mimic dom events
+		if (typeof el.addEventListener !== 'function') {
+			opts = el;
+			el = window;
+		}
+	}
+
+	// cb and el are required
+	if (typeof cb !== 'function' || !el) {
+		return;
+	}
+
+	// Bind the event
+	el.addEventListener('click', Interceptor.onClick(opts, cb), false);
+
+	// Returns the off function
+	return function() {
+		el.removeEventListener('click', Interceptor.onClick, false);
+	};
+};
+
+/**
+ * On click handler that intercepts clicks based on options
+ *
+ * @function onClick
+ * @param {Event} e
+ */
+Interceptor.onClick = function(opts, cb) {
+	// Options are optional
+	if (typeof opts === 'function') {
+		cb = opts;
+		opts = {};
+	}
+
+	// cb is required and must be a function
+	if (typeof cb !== 'function') {
+		return;
+	}
+
+	// Default optsions to true
+	[
+		'modifierKeys',
+		'download',
+		'target',
+		'hash',
+		'mailTo',
+		'sameOrigin',
+	].forEach(function(key) {
+		opts[key] = typeof opts[key] !== 'undefined' ? opts[key] : true;
+	});
+
+	// Return the event handler
+	return function(e) {
+		// Cross browser event
+		e = e || window.event;
+
+		// Check if we are a click we should ignore
+		if (opts.modifierKeys && (which(e) !== 1 || e.metaKey || e.ctrlKey || e.shiftKey || e.defaultPrevented)) {
+			return;
+		}
+
+		// Find link up the dom tree
+		var el = Interceptor.isLink(e.target);
+
+		//
+		// Ignore if tag has
+		//
+
+		// 1. Not a link
+		if (!el) {
+			return;
+		}
+
+		// 2. "download" attribute
+		if (opts.download && el.getAttribute('download')) {
+			return;
+		}
+
+		// 3. rel="external" attribute
+		if (opts.checkExternal && el.getAttribute('rel') === 'external') {
+			return;
+		}
+
+		// 4. target attribute
+		if (opts.target && (el.target && el.target !== '_self')) {
+			return;
+		}
+
+		// Get the link href
+		var link = el.getAttribute('href');
+
+		// ensure this is not a hash for the same path
+		if (opts.hash && el.pathname === location.pathname && (el.hash || link === '#')) {
+			return;
+		}
+
+		// Check for mailto: in the href
+		if (opts.mailTo && link && link.indexOf('mailto:') > -1) {
+			return;
+		}
+
+		// Only for same origin
+		if (opts.sameOrigin && !Interceptor.sameOrigin(link)) {
+			return;
+		}
+
+		// All tests passed, intercept the link
+		cb(e, el);
+	};
+};
+
+Interceptor.isLink = function(el) {
+	while (el && 'A' !== el.nodeName) {
+		el = el.parentNode;
+	}
+	if (!el || 'A' !== el.nodeName) {
+		return;
+	}
+	return el;
+};
+
+/**
+ * Get the pressed button
+ *
+ */
+Interceptor.which = function(e) {
+	return e.which === null ? e.button : e.which;
+}
+
+/**
+ * Internal request
+ *
+ */
+Interceptor.isInternal = new RegExp('^(?:(?:http[s]?:\/\/)?' + location.host.replace(/\./g, '\\.') + ')?\/?[#?]?', 'i');
+Interceptor.sameOrigin = function(url) {
+	return !!Interceptor.isInternal.test(url);
+}

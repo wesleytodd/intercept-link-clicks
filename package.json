@@ -1,0 +1,26 @@
+{
+  "name": "intercept-link-clicks",
+  "version": "1.0.0",
+  "description": "Call a callback if the a link was clicked",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mochify/bin/cmd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wesleytodd/intercept-link-clicks.git"
+  },
+  "keywords": [
+    "browser",
+    "links"
+  ],
+  "author": "Wes Todd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wesleytodd/intercept-link-clicks/issues"
+  },
+  "homepage": "https://github.com/wesleytodd/intercept-link-clicks",
+  "devDependencies": {
+    "mochify": "^2.8.1"
+  }
+}
