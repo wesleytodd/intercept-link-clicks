@@ -1,6 +1,6 @@
 {
   "name": "intercept-link-clicks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Call a callback if the a link was clicked",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,6 @@
   "homepage": "https://github.com/wesleytodd/intercept-link-clicks",
   "devDependencies": {
     "mochify": "^2.14.3",
-	"happiness": "git+https://github.com/JedWatson/happiness.git#standard-fork"
+	"happiness": "JedWatson/happiness"
   }
 }
