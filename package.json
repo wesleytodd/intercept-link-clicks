@@ -1,6 +1,6 @@
 {
   "name": "intercept-link-clicks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Call a callback if the a link was clicked",
   "main": "index.js",
   "scripts": {
