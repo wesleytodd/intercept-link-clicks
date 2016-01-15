@@ -4,7 +4,7 @@
   "description": "Call a callback if the a link was clicked",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mochify/bin/cmd.js"
+    "test": "happiness && mochify"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/wesleytodd/intercept-link-clicks",
   "devDependencies": {
-    "mochify": "^2.8.1"
+    "mochify": "^2.14.3",
+	"happiness": "git+https://github.com/JedWatson/happiness.git#standard-fork"
   }
 }

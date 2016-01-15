@@ -1,17 +1,17 @@
-var interceptClicks = require('../'),
-	assert = require('assert');
+/* global describe, it, beforeEach */
+var interceptClicks = require('../');
 
-describe('interceptClicks', function() {
+describe('interceptClicks', function () {
 	var event, onClick;
-	beforeEach(function() {
+	beforeEach(function () {
 		event = {
 			which: 1,
-			preventDefault: function() {}
+			preventDefault: function () {}
 		};
 	});
 
-	it('should not intercept clicks when certain modifier keys were pressed or default was prevented', function() {
-		onClick = interceptClicks(function() {
+	it('should not intercept clicks when certain modifier keys were pressed or default was prevented', function () {
+		onClick = interceptClicks(function () {
 			throw new Error('Should not have been called!!');
 		});
 
@@ -29,8 +29,8 @@ describe('interceptClicks', function() {
 		});
 	});
 
-	it('should not intercept clicks when not on a link', function() {
-		onClick = interceptClicks(function() {
+	it('should not intercept clicks when not on a link', function () {
+		onClick = interceptClicks(function () {
 			throw new Error('Should not have been called!!');
 		});
 
@@ -39,8 +39,8 @@ describe('interceptClicks', function() {
 		onClick(event);
 	});
 
-	it('should not intercept clicks when the element has download', function() {
-		onClick = interceptClicks(function() {
+	it('should not intercept clicks when the element has download', function () {
+		onClick = interceptClicks(function () {
 			throw new Error('Should not have been called!!');
 		});
 
@@ -50,8 +50,8 @@ describe('interceptClicks', function() {
 		onClick(event);
 	});
 
-	it('should not intercept clicks when the element has rel', function() {
-		onClick = interceptClicks(function() {
+	it('should not intercept clicks when the element has rel', function () {
+		onClick = interceptClicks(function () {
 			throw new Error('Should not have been called!!');
 		});
 
@@ -61,8 +61,8 @@ describe('interceptClicks', function() {
 		onClick(event);
 	});
 
-	it('should not intercept clicks when the path is the same but the hash changed', function() {
-		onClick = interceptClicks(function() {
+	it('should not intercept clicks when the path is the same but the hash changed', function () {
+		onClick = interceptClicks(function () {
 			throw new Error('Should not have been called!!');
 		});
 
@@ -74,8 +74,8 @@ describe('interceptClicks', function() {
 		onClick(event);
 	});
 
-	it('should not intercept clicks when the path is a mailto link', function() {
-		onClick = interceptClicks(function() {
+	it('should not intercept clicks when the path is a mailto link', function () {
+		onClick = interceptClicks(function () {
 			throw new Error('Should not have been called!!');
 		});
 
@@ -85,8 +85,8 @@ describe('interceptClicks', function() {
 		onClick(event);
 	});
 
-	it('should not intercept clicks when the link is to a different origin', function() {
-		onClick = interceptClicks(function() {
+	it('should not intercept clicks when the link is to a different origin', function () {
+		onClick = interceptClicks(function () {
 			throw new Error('Should not have been called!!');
 		});
 
@@ -98,5 +98,4 @@ describe('interceptClicks', function() {
 		event.target.setAttribute('href', '//tester.com');
 		onClick(event);
 	});
-
 });
