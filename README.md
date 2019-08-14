@@ -1,5 +1,9 @@
 # Intercept Link Clicks
 
+[![NPM Version](https://img.shields.io/npm/v/intercept-link-clicks.svg)](https://npmjs.org/package/intercept-link-clicks)
+[![NPM Downloads](https://img.shields.io/npm/dm/intercept-link-clicks.svg)](https://npmjs.org/package/intercept-link-clicks)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/standard/standard)
+
 This module is mainly to intercept applicable link clicks for a single-page app router.  The options are geared toward intercepting internal links that should change the page state in some way.
 
 ## Install
