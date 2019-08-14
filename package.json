@@ -1,10 +1,12 @@
 {
   "name": "intercept-link-clicks",
-  "version": "1.0.2",
+  "version": "1.1.0-0",
   "description": "Call a callback if the a link was clicked",
   "main": "index.js",
   "scripts": {
-    "test": "happiness && mochify"
+    "test": "standard && mochify",
+    "prepublishOnly": "npm t",
+    "postpublish": "git push origin && git push origin --tags"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,7 @@
   },
   "homepage": "https://github.com/wesleytodd/intercept-link-clicks",
   "devDependencies": {
-    "mochify": "^2.14.3",
-	"happiness": "JedWatson/happiness"
+    "mochify": "^6.4.1",
+    "standard": "^13.1.0"
   }
 }
