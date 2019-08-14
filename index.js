@@ -54,14 +54,15 @@ Interceptor.onClick = function (opts, cb) {
     return
   }
 
-  // Default optsions to true
+  // Default options to true
   [
     'modifierKeys',
     'download',
     'target',
     'hash',
     'mailTo',
-    'sameOrigin'
+    'sameOrigin',
+    'shadowDom'
   ].forEach(function (key) {
     opts[key] = typeof opts[key] !== 'undefined' ? opts[key] : true
   })
@@ -78,6 +79,11 @@ Interceptor.onClick = function (opts, cb) {
 
     // Find link up the dom tree
     var el = Interceptor.isLink(e.target)
+
+    // Support for links in shadow dom
+    if (opts.shadowDom && !el && e.composedPath) {
+      el = Interceptor.isLink(e.composedPath()[0])
+    }
 
     //
     // Ignore if tag has

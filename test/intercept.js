@@ -98,4 +98,19 @@ describe('interceptClicks', function () {
     event.target.setAttribute('href', '//tester.com')
     onClick(event)
   })
+
+  it('should support shadow dom clicks via composedPath', function (done) {
+    onClick = interceptClicks.onClick(function () {
+      done()
+    })
+
+    event.target = document.createElement('div')
+    event.composedPath = function () {
+      var a = document.createElement('a')
+      a.setAttribute('href', 'http://tester.com')
+      return [a]
+    }
+
+    onClick(event)
+  })
 })

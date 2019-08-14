@@ -37,6 +37,10 @@ interceptClicks(document.querySelector('.my-el'), {
   // hash: true
   // mailTo: true
 
+  // Support events crossing a shadow dom boundry,
+  // required for capturing link clicks inside web components
+  // shadowDom: true 
+
   // Intercept all clicks, even ones that are not same origin
   sameOrigin: false
 }, (e, el) => {
