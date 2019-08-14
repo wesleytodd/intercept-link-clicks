@@ -15,12 +15,12 @@ $ npm install --save intercept-link-clicks
 ## Usage
 
 ```javascript
-var interceptClicks = require('intercept-link-clicks');
+const interceptClicks = require('intercept-link-clicks')
 
-interceptClicks(function(e, el) {
-	// Change the page state here
-	// `e` is the event object
-	// `el` is the clicked link, which might be different from `e.target`
+interceptClicks((e, el) => {
+  // Change the page state here
+  // `e` is the event object
+  // `el` is the clicked link, which might be different from `e.target`
 });
 ```
 
@@ -28,18 +28,18 @@ A more advanced usage is to pass options and an optional element:
 
 ```javascript
 interceptClicks(document.querySelector('.my-el'), {
-	// 
-	// Leave all these as defauts:
-	//
-	// modifierKeys: true
-	// download: true
-	// target: true
-	// hash: true
-	// mailTo: true
+  // 
+  // Leave all these as defauts:
+  //
+  // modifierKeys: true
+  // download: true
+  // target: true
+  // hash: true
+  // mailTo: true
 
-	// Intercept all clicks, even ones that are not same origin
-	sameOrigin: false
-}, function(e, el) {
-	// Change the page state here
+  // Intercept all clicks, even ones that are not same origin
+  sameOrigin: false
+}, (e, el) => {
+  // Change the page state here
 });
 ```

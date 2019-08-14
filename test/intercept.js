@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach */
+var { describe, it, beforeEach } = require('mocha')
 var interceptClicks = require('../')
 
 describe('interceptClicks', function () {
