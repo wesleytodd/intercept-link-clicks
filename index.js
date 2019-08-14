@@ -95,7 +95,7 @@ Interceptor.onClick = function (opts, cb) {
     }
 
     // 2. "download" attribute
-    if (opts.download && el.getAttribute('download')) {
+    if (opts.download && el.getAttribute('download') !== null) {
       return
     }
 
@@ -152,7 +152,7 @@ Interceptor.which = function (e) {
 /**
  * Internal request
  */
-Interceptor.isInternal = new RegExp('^(?:(?:http[s]?://)?' + window.location.host.replace(/\./g, '\\.') + ')?/?[#?]?', 'i')
+Interceptor.isInternal = new RegExp('^(?:(?:http[s]?:)?//' + window.location.host.replace(/\./g, '\\.') + ')?(?:/[^/]|#|(?!(?:http[s]?:)?//).*$)', 'i')
 Interceptor.sameOrigin = function (url) {
   return !!Interceptor.isInternal.test(url)
 }

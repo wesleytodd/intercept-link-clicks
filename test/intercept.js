@@ -1,5 +1,6 @@
 var { describe, it, beforeEach } = require('mocha')
-var interceptClicks = require('../')
+var Interceptor = require('../')
+var interceptClicks = Interceptor.onClick
 
 describe('interceptClicks', function () {
   var event, onClick
@@ -51,12 +52,14 @@ describe('interceptClicks', function () {
   })
 
   it('should not intercept clicks when the element has rel', function () {
-    onClick = interceptClicks(function () {
+    onClick = interceptClicks({
+      checkExternal: true
+    }, function () {
       throw new Error('Should not have been called!!')
     })
 
     event.target = document.createElement('a')
-    event.target.setAttribute('rel', 'nofollow')
+    event.target.setAttribute('rel', 'external')
 
     onClick(event)
   })
@@ -66,10 +69,8 @@ describe('interceptClicks', function () {
       throw new Error('Should not have been called!!')
     })
 
-    window.location = '/'
-
     event.target = document.createElement('a')
-    event.target.setAttribute('href', '/#test')
+    event.target.setAttribute('href', window.location.pathname + '#test')
 
     onClick(event)
   })
@@ -90,6 +91,8 @@ describe('interceptClicks', function () {
       throw new Error('Should not have been called!!')
     })
 
+    var host = 'example.com'
+    Interceptor.isInternal = new RegExp('^(?:(?:http[s]?:)?//' + host.replace(/\./g, '\\.') + ')?(?:/[^/]|#|(?!(?:http[s]?:)?//).*$)', 'i')
     event.target = document.createElement('a')
 
     event.target.setAttribute('href', 'http://tester.com')
@@ -100,14 +103,14 @@ describe('interceptClicks', function () {
   })
 
   it('should support shadow dom clicks via composedPath', function (done) {
-    onClick = interceptClicks.onClick(function () {
+    onClick = interceptClicks(function () {
       done()
     })
 
     event.target = document.createElement('div')
     event.composedPath = function () {
       var a = document.createElement('a')
-      a.setAttribute('href', 'http://tester.com')
+      a.setAttribute('href', '/')
       return [a]
     }
 
