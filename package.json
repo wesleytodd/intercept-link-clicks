@@ -1,12 +1,12 @@
 {
   "name": "intercept-link-clicks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Call a callback if the a link was clicked",
   "main": "index.js",
   "scripts": {
     "test": "standard && mochify",
-	"prepublishOnly": "npm t",
-	"postpublish": "git push origin && git push origin --tags"
+    "prepublishOnly": "npm t",
+    "postpublish": "git push origin && git push origin --tags"
   },
   "repository": {
     "type": "git",
